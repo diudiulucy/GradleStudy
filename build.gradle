@@ -1,0 +1,16 @@
+task helloword << {
+	println 'Yiibai gradle quick start, hello lucy is you?'
+}
+
+task upper << {
+	String expString = "lucy wang"
+	println "Original:" + expString
+	println "Upper case:" + expString.toUpperCase()
+}
+
+task count << {
+	4.times{
+		println "$it"
+	}
+}
+
