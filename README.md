@@ -75,3 +75,50 @@ println tasks.hello.name
 println tasks['hello'].name
 
 ```
+
+## 向任务添加依赖关系
+ - 项目路径作为相应任务名称的前缀。
+  ```
+  task taskX << {
+   println 'taskX'
+}
+task taskY(dependsOn: 'taskX') << {
+   println "taskY"
+}
+  ```
+ - 使用任务对象
+  ```
+  task taskY << {
+   println 'taskY'
+}
+task taskX << {
+   println 'taskX'
+}
+taskY.dependsOn taskX
+  ```
+  - 使用闭包
+  ```
+  task taskX << {
+   println 'taskX'
+}
+
+taskX.dependsOn {
+   tasks.findAll { 
+     task -> task.name.startsWith('lib') 
+   }
+}
+task lib1 << {
+   println 'lib1'
+}
+task lib2 << {
+   println 'lib2'
+}
+task notALib << {
+   println 'notALib'
+}
+  ```
+  执行后输出结果
+  `
+  lib1
+lib2
+taskX`
