@@ -122,3 +122,25 @@ task notALib << {
   lib1
 lib2
 taskX`
+
+
+## 跳过任务
+
+如果用于跳过任务的逻辑不能用谓词表示，则可以使用StopExecutionException。 如果操作抛出此异常，则会跳过此操作的进一步执行以及此任务的任何后续操作的执行。 构建继续执行下一个任务。
+```
+task compile << {
+    println 'We are doing the compile.'
+}
+
+compile.doFirst {
+    // Here you would put arbitrary conditions in real life.
+    // But this is used in an integration test so we want defined behavior.
+    if (true) { throw new StopExecutionException() }
+}
+task myTask(dependsOn: 'compile') << {
+   println 'I am not affected'
+}
+```
+输出
+`I am not affected`
+这里跳过了compile的执行
