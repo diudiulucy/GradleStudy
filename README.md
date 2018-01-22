@@ -48,3 +48,30 @@ task taskY << {
     println 'taskY'
 }
 ```
+
+执行，输出结果
+
+taskY
+
+taskX
+
+## 定位任务
+
+代码访问任务作为属性
+
+```
+task hello
+
+println hello.name
+println project.hello.name
+
+```
+
+通过任务集合使用所有属性
+```
+task hello
+
+println tasks.hello.name
+println tasks['hello'].name
+
+```
